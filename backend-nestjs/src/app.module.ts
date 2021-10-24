@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { WhoisController } from './whois/whois.controller';
-import { WhoisModule } from './whois/whois.module';
+import { WhoisController } from './lookup/whois.controller';
+import { WhoisModule } from './lookup/whois.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [WhoisModule],
+  imports: [ConfigModule.forRoot(), WhoisModule],
   controllers: [WhoisController],
   providers: [],
 })

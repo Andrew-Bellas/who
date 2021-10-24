@@ -1,14 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { HttpService } from '../common/providers/http.service';
 import { Cordinates } from './interfaces/cordinates.interface';
-import { Owner, WhoisDTO } from './interfaces/whois.dto';
+import { LookupDTO } from './interfaces/lookup.dto';
 import dns from 'dns';
 
 @Injectable()
 export class WhoisService {
   constructor(public httpService: HttpService) {}
 
-  public async getByIp(ip: string): Promise<WhoisDTO> {
+  public async getByIp(ip: string): Promise<LookupDTO> {
     let domain: string;
     dns.reverse(ip, (_, hostnames) => (domain = hostnames[0]));
 
@@ -19,7 +19,7 @@ export class WhoisService {
     return this.getByDomain(domain);
   }
 
-  public async getByDomain(domain: string): Promise<WhoisDTO> {
+  public async getByDomain(domain: string): Promise<LookupDTO> {
     let whoisData = await this.fetchWhoisData(domain);
     const cordinates = await this.fetchCordinates(whoisData.ip);
     whoisData.latitude = cordinates.latitude;
@@ -27,7 +27,7 @@ export class WhoisService {
     return whoisData;
   }
 
-  private async fetchWhoisData(domain): Promise<WhoisDTO> {
+  private async fetchWhoisData(domain): Promise<LookupDTO> {
     const result = await this.httpService.fetchJson(
       `${process.env.whoisLookupUrl}/?domain=${domain}&format=json`,
       {
@@ -39,7 +39,7 @@ export class WhoisService {
     );
 
     return {
-      ip: result.ip,
+      ip: result.ips,
       domain: result.name,
       owners: result.contacts?.owner?.map((owner) => {
         return {

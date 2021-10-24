@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { WhoisService } from './whois.service';
+import { WhoisService } from './lookup.service';
 
 describe('WhoisService', () => {
   let service: WhoisService;

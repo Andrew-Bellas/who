@@ -12,20 +12,20 @@ const ResultCard = (props) => {
     <List alignitems="flex-start" dense>
       {Object.keys(lookupData).length > 0 ? (
         <>
-          <ListItem> Domain: {lookupData.name} </ListItem>
-          <ListItem> IP Address: {lookupData.ips} </ListItem>
-          <ListItem> Longitude: {lookupData.longitude?.toString()} </ListItem>
-          <ListItem> Latitude: {lookupData.latitude?.toString()} </ListItem>
-          <ListItem>Registered: {lookupData.registered?.toString()}</ListItem>
-          {lookupData.contacts?.owner?.map((owner) => (
-            <>
-              <ListItem>Owner Name: {owner.name} </ListItem>
-              <ListItem>Owner Organization: {owner.organization}</ListItem>
-              <ListItem>Owner State: {owner.state}</ListItem>
-              <ListItem>Owner Country: {owner.country}</ListItem>
-            </>
-          ))}
-        </>
+        <ListItem> Domain: {lookupData.domain} </ListItem>
+        <ListItem> IP Address: {lookupData.ip} </ListItem>
+        <ListItem> Longitude: {lookupData.longitude} </ListItem>
+        <ListItem> Latitude: {lookupData.latitude} </ListItem>
+        <ListItem>Registered: {lookupData.registered?.toString()}</ListItem>
+        {lookupData.owners?.map((owner) => (
+          <>
+            <ListItem>Owner Name: {owner.name} </ListItem>
+            <ListItem>Owner Organization: {owner.organization}</ListItem>
+            <ListItem>Owner Region: {owner.region}</ListItem>
+            <ListItem>Owner Country: {owner.country}</ListItem>
+          </>
+        ))}
+      </>
       ) : undefined}
     </List>
   );
@@ -41,12 +41,12 @@ const ResultCard = (props) => {
 
 ResultCard.propTypes = {
   lookupData: PropTypes.shape({
-    name: PropTypes.string,
-    ips: PropTypes.string,
+    domain: PropTypes.string,
+    ip: PropTypes.string,
     longitude: PropTypes.number,
     latitude: PropTypes.number,
     registered: PropTypes.bool,
-    contacts: PropTypes.arrayOf(PropTypes.object),
+    owners: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
 };
 

@@ -5,7 +5,7 @@ export interface Owner {
   country: string;
 }
 
-export interface WhoisDTO {
+export interface LookupDTO {
   latitude?: string;
   longitude?: string;
   ip: string;
