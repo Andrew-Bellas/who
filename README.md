@@ -1,1 +1,1 @@
-# whois
+# who
