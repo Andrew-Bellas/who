@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { HttpService } from 'src/common/providers/http.service';
-import { WhoisController } from './whois.controller';
-import { WhoisService } from './lookup.service';
+import { DnsService } from '../common/providers/dns.service';
+import { HttpService } from '../common/providers/http.service';
+import { LookupController } from './lookup.controller';
+import { LookupService } from './lookup.service';
 
 @Module({
   imports: [],
-  controllers: [WhoisController],
-  providers: [WhoisService, HttpService],
-  exports: [WhoisService]
+  controllers: [LookupController],
+  providers: [LookupService, HttpService, DnsService],
+  exports: [LookupService],
 })
-
-export class WhoisModule {}
+export class LookupModule {}

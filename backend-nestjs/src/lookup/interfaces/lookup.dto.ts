@@ -12,4 +12,3 @@ export interface LookupDTO {
   domain: string;
   owners: Owner[];
 }
-

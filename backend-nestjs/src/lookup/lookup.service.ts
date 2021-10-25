@@ -3,14 +3,14 @@ import { HttpService } from '../common/providers/http.service';
 import { Cordinates } from './interfaces/cordinates.interface';
 import { LookupDTO } from './interfaces/lookup.dto';
 import dns from 'dns';
+import { DnsService } from '../common/providers/dns.service';
 
 @Injectable()
-export class WhoisService {
-  constructor(public httpService: HttpService) {}
+export class LookupService {
+  constructor(public httpService: HttpService, public dnsService: DnsService) {}
 
   public async getByIp(ip: string): Promise<LookupDTO> {
-    let domain: string;
-    dns.reverse(ip, (_, hostnames) => (domain = hostnames[0]));
+    const domain = await this.dnsService.reverse(ip);
 
     if (!domain) {
       throw new NotFoundException('Unable to resolve domain.');
@@ -20,8 +20,9 @@ export class WhoisService {
   }
 
   public async getByDomain(domain: string): Promise<LookupDTO> {
-    let whoisData = await this.fetchWhoisData(domain);
+    const whoisData = await this.fetchWhoisData(domain);
     const cordinates = await this.fetchCordinates(whoisData.ip);
+
     whoisData.latitude = cordinates.latitude;
     whoisData.longitude = cordinates.longitude;
     return whoisData;
@@ -53,7 +54,7 @@ export class WhoisService {
   }
 
   private async fetchCordinates(ip: any): Promise<Cordinates> {
-    let response = await this.httpService.fetchJson(
+    const response = await this.httpService.fetchJson(
       `${process.env.ipstackUrl}/${ip}?access_key=${process.env.ipstackKey}`,
     );
     return { latitude: response.latitude, longitude: response.longitude };

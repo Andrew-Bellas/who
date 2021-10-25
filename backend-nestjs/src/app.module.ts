@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { WhoisController } from './lookup/whois.controller';
-import { WhoisModule } from './lookup/whois.module';
 import { ConfigModule } from '@nestjs/config';
+import { LookupController } from './lookup/lookup.controller';
+import { LookupModule } from './lookup/lookup.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), WhoisModule],
-  controllers: [WhoisController],
+  imports: [ConfigModule.forRoot(), LookupModule],
+  controllers: [LookupController],
   providers: [],
 })
 export class AppModule {}
