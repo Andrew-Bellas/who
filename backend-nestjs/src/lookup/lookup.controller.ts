@@ -7,13 +7,12 @@ export class LookupController {
   constructor(public readonly whoisService: LookupService) {}
 
   @Get('whois/ip/:ip')
-  async getIp(@Param() ip: string): Promise<LookupDTO> {
+  async getIp(@Param('ip') ip: string): Promise<LookupDTO> {
     return this.whoisService.getByIp(ip);
   }
 
   @Get('whois/domain/:domain')
   async getDomain(@Param('domain') domain: string): Promise<LookupDTO> {
-    console.log(domain);
     return this.whoisService.getByDomain(domain);
   }
 

@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { HttpService } from '../common/providers/http.service';
 import { Cordinates } from './interfaces/cordinates.interface';
 import { LookupDTO } from './interfaces/lookup.dto';
-import dns from 'dns';
 import { DnsService } from '../common/providers/dns.service';
 
 @Injectable()
