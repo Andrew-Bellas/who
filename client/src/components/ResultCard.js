@@ -10,6 +10,7 @@ const ResultCard = (props) => {
 
   const gatherContent = () => (
     <List alignitems="flex-start" dense>
+      {console.log(lookupData)}
       {Object.keys(lookupData).length > 0 ? (
         <>
         <ListItem> Domain: {lookupData.domain} </ListItem>

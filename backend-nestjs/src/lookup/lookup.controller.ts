@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Req, Request } from '@nestjs/common';
+import { Controller, Get, NotFoundException, Param, Req, Request } from '@nestjs/common';
 import { LookupDTO } from './interfaces/lookup.dto';
 import { LookupService } from './lookup.service';
 
@@ -17,7 +17,10 @@ export class LookupController {
   }
 
   @Get('whoami')
-  async getMyIP(@Req() req: Request): Promise<LookupDTO> {
-    return this.whoisService.getByIp((await req.json()).id);
+  async getMyIP(@Request() req): Promise<LookupDTO> {
+    if(!req.ip) {
+      throw new NotFoundException('IP Not Found')
+    }
+    return this.whoisService.getByIp(req.ip);
   }
 }

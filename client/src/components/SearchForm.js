@@ -1,13 +1,14 @@
 import { React, useState } from "react";
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import MyIPButton from "./MyIPButton";
 import ErrorSnackbar from "./ErrorSnackbar";
-import { WHOIS_URL } from "../constants";
+import { BACKEND_BASE_URL } from "../constants";
 
 const SearchForm = (props) => {
   const { setLookupData } = props;
@@ -17,7 +18,7 @@ const SearchForm = (props) => {
 
   const fetchWhoIsByDomain = async (domain) => {
     try {
-      let response = await fetch(`${WHOIS_URL}/domain/${domain}`);
+      let response = await fetch(`${BACKEND_BASE_URL}/whois/domain/${domain}`);
       response = await response.json();
       setLookupData(response);
     } catch (e) {
@@ -27,7 +28,7 @@ const SearchForm = (props) => {
 
   const fetchWhoIsByIP = async (ip) => {
     try {
-      let response = await fetch(`${WHOIS_URL}/ip/${ip}`);
+      let response = await fetch(`${BACKEND_BASE_URL}/whois/ip/${ip}`);
       response = await response.json();
       setLookupData(response);
     } catch (e) {
@@ -92,6 +93,14 @@ const SearchForm = (props) => {
               message={`Error performing lookup for ${formInput}`}
             />
           ) : undefined}
+        </Grid>
+        <Grid>
+          <MyIPButton
+            onError={() => {
+              setIsError(true);
+            }}
+            setLookupData={(data) => setLookupData(data)}
+          />
         </Grid>
       </Grid>
     </>
