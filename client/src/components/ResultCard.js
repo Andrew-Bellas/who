@@ -10,14 +10,12 @@ const ResultCard = (props) => {
 
   const gatherContent = () => (
     <List alignitems="flex-start" dense>
-      {console.log(lookupData)}
       {Object.keys(lookupData).length > 0 ? (
         <>
         <ListItem> Domain: {lookupData.domain} </ListItem>
         <ListItem> IP Address: {lookupData.ip} </ListItem>
         <ListItem> Longitude: {lookupData.longitude} </ListItem>
         <ListItem> Latitude: {lookupData.latitude} </ListItem>
-        <ListItem>Registered: {lookupData.registered?.toString()}</ListItem>
         {lookupData.owners?.map((owner) => (
           <>
             <ListItem>Owner Name: {owner.name} </ListItem>

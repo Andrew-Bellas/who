@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
+import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Radio from "@material-ui/core/Radio";
@@ -36,6 +37,11 @@ const SearchForm = (props) => {
     }
   };
 
+  const handleInputChange = (e) => {
+    setFormInput(e.target.value);
+    isError && setIsError(false);
+  };
+
   return (
     <>
       <Grid
@@ -51,7 +57,7 @@ const SearchForm = (props) => {
             color="secondary"
             variant="outlined"
             style={{ width: "400px", maxWidth: "100%", marginBottom: "3%" }}
-            onChange={(e) => setFormInput(e.target.value)}
+            onChange={(e) => handleInputChange(e)}
           />
         </Grid>
       </Grid>
@@ -85,8 +91,10 @@ const SearchForm = (props) => {
                 ? fetchWhoIsByDomain(formInput)
                 : fetchWhoIsByIP(formInput);
             }}
+            onError={() => setIsError(true)}
+            disabled={!formInput}
           >
-            Search
+            <Typography> Search </Typography>
           </Button>
           {isError ? (
             <ErrorSnackbar

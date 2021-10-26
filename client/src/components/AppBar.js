@@ -9,7 +9,7 @@ import { SOURCE_CODE_URL } from '../constants'
 const AppBar = () => (
     <MuiAppBar>
       <Toolbar>
-        <Typography variant="h4" style={{marginRight: 'auto'}}> WHOIS Lookup</Typography>
+        <Typography variant="h4" style={{marginRight: 'auto'}}> WHO Lookup</Typography>
         <IconButton href={SOURCE_CODE_URL} >
           <Github style={{width: '35px', height: '35px'}} />
         </IconButton>
